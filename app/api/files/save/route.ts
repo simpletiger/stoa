@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
 import { createClient } from '@/lib/supabase/server'
+import { writeFile } from '@/lib/stoa-api'
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Write file to disk
-    await writeFile(path, content, 'utf-8')
+    // Write file via Stoa API
+    await writeFile(path, content)
 
     // Log the change in Supabase for Marcus to track
     await supabase.from('file_changes').insert({
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error saving file:', error)
     return NextResponse.json(
-      { error: 'Failed to save file' },
+      { error: 'Failed to save file', message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }

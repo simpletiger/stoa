@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readdir, readFile } from 'fs/promises'
-import { join } from 'path'
 import { createClient } from '@/lib/supabase/server'
+import { listMemoryFiles, searchMemory, readFile } from '@/lib/stoa-api'
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,38 +21,24 @@ export async function GET(request: NextRequest) {
     const action = searchParams.get('action')
     const file = searchParams.get('file')
 
-    const memoryPath = join(process.env.HOME || '', 'clawd', 'memory')
-
     // List all memory files
     if (action === 'list') {
-      const files = await readdir(memoryPath)
-      const memoryFiles = files.filter(f => f.endsWith('.md'))
-        .sort((a, b) => b.localeCompare(a)) // Sort descending (newest first)
-
-      const filesWithStats = await Promise.all(
-        memoryFiles.map(async (filename) => {
-          const filePath = join(memoryPath, filename)
-          const content = await readFile(filePath, 'utf-8')
-          const lines = content.split('\n').length
-          const chars = content.length
-
-          return {
-            filename,
-            path: filePath,
-            lines,
-            chars,
-            size: `${(chars / 1024).toFixed(1)} KB`
-          }
-        })
-      )
+      const files = await listMemoryFiles()
+      
+      const filesWithStats = files.map((f) => ({
+        filename: f.name,
+        path: f.path,
+        lines: 0, // Not calculated by API
+        chars: f.size,
+        size: `${(f.size / 1024).toFixed(1)} KB`
+      }))
 
       return NextResponse.json({ files: filesWithStats })
     }
 
     // Read a specific file
     if (action === 'read' && file) {
-      const filePath = join(memoryPath, file)
-      const content = await readFile(filePath, 'utf-8')
+      const content = await readFile(`memory/${file}`)
       
       return NextResponse.json({ 
         filename: file,
@@ -63,39 +48,21 @@ export async function GET(request: NextRequest) {
 
     // Search across all memory files
     if (action === 'search') {
-      const query = searchParams.get('query')?.toLowerCase()
+      const query = searchParams.get('query')
       if (!query) {
         return NextResponse.json({ results: [] })
       }
 
-      const files = await readdir(memoryPath)
-      const memoryFiles = files.filter(f => f.endsWith('.md'))
+      const results = await searchMemory(query, 50)
 
-      const results: Array<{
-        filename: string
-        lineNumber: number
-        line: string
-        context: string
-      }> = []
-      for (const filename of memoryFiles) {
-        const filePath = join(memoryPath, filename)
-        const content = await readFile(filePath, 'utf-8')
-        const lines = content.split('\n')
+      const formattedResults = results.map((r) => ({
+        filename: r.file,
+        lineNumber: r.line,
+        line: r.content,
+        context: r.context
+      }))
 
-        // Find matching lines
-        lines.forEach((line, index) => {
-          if (line.toLowerCase().includes(query)) {
-            results.push({
-              filename,
-              lineNumber: index + 1,
-              line: line.trim(),
-              context: lines.slice(Math.max(0, index - 1), index + 2).join('\n')
-            })
-          }
-        })
-      }
-
-      return NextResponse.json({ results: results.slice(0, 50) }) // Limit to 50 results
+      return NextResponse.json({ results: formattedResults })
     }
 
     return NextResponse.json(
@@ -105,7 +72,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error in memory API:', error)
     return NextResponse.json(
-      { error: 'Failed to process request' },
+      { error: 'Failed to process request', message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }

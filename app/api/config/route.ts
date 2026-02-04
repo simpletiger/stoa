@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFile, writeFile } from 'fs/promises'
-import { join } from 'path'
 import { createClient } from '@/lib/supabase/server'
+import { readConfig, writeConfig } from '@/lib/stoa-api'
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,17 +17,14 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const configPath = join(process.env.HOME || '', '.openclaw', 'openclaw.json')
-    const content = await readFile(configPath, 'utf-8')
-    
-    // Parse and validate JSON
-    const config = JSON.parse(content)
+    const config = await readConfig()
+    const configString = JSON.stringify(config, null, 2)
 
-    return NextResponse.json({ config: content, valid: true })
+    return NextResponse.json({ config: configString, valid: true })
   } catch (error) {
     console.error('Error reading config:', error)
     return NextResponse.json(
-      { error: 'Failed to read config', config: '', valid: false },
+      { error: 'Failed to read config', config: '', valid: false, message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
@@ -52,8 +48,9 @@ export async function POST(request: NextRequest) {
     const { content } = await request.json()
 
     // Validate JSON before saving
+    let configObj
     try {
-      JSON.parse(content)
+      configObj = JSON.parse(content)
     } catch (e) {
       return NextResponse.json(
         { error: 'Invalid JSON format' },
@@ -61,12 +58,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const configPath = join(process.env.HOME || '', '.openclaw', 'openclaw.json')
-    await writeFile(configPath, content, 'utf-8')
+    await writeConfig(configObj)
 
     // Log the change
     await supabase.from('file_changes').insert({
-      file_path: configPath,
+      file_path: '~/.openclaw/config.json',
       file_type: 'config',
       changed_by: user.id,
       changed_at: new Date().toISOString()
@@ -76,7 +72,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error saving config:', error)
     return NextResponse.json(
-      { error: 'Failed to save config' },
+      { error: 'Failed to save config', message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
