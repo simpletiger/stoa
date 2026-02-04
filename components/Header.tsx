@@ -59,11 +59,11 @@ export default function Header({ user }: HeaderProps) {
           <div className="flex items-center gap-2.5">
             <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface-elevated border border-border">
               <div 
-                className={`w-1.5 h-1.5 rounded-full transition-all ${
+                className={`w-1.5 h-1.5 rounded-full ${
                   apiHealthy === null 
                     ? 'bg-gray-400 animate-pulse' 
                     : apiHealthy 
-                    ? 'bg-green-500 shadow-lg shadow-green-500/50 animate-pulse' 
+                    ? 'bg-green-500 shadow-lg shadow-green-500/50 animate-status-pulse' 
                     : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
                 }`}
               />
