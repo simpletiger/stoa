@@ -1,16 +1,15 @@
 import AgentsEditor from './AgentsEditor'
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { readFile } from '@/lib/stoa-api'
 
 export default async function AgentsPage() {
-  const agentsPath = join(process.env.HOME || '', 'clawd', 'AGENTS.md')
+  const filePath = 'AGENTS.md'
   
   let content = ''
   try {
-    content = await readFile(agentsPath, 'utf-8')
+    content = await readFile(filePath)
   } catch (error) {
     console.error('Error reading AGENTS.md:', error)
-    content = '# AGENTS.md\n\nError loading file.'
+    content = '# AGENTS.md\n\nError loading file. Check that the Stoa API server is running.'
   }
 
   return (
@@ -22,7 +21,7 @@ export default async function AgentsPage() {
         </p>
       </div>
       
-      <AgentsEditor initialContent={content} filePath={agentsPath} />
+      <AgentsEditor initialContent={content} filePath={filePath} />
     </div>
   )
 }

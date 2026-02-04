@@ -1,16 +1,15 @@
 import SoulEditor from './SoulEditor'
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { readFile } from '@/lib/stoa-api'
 
 export default async function SoulPage() {
-  const soulPath = join(process.env.HOME || '', 'clawd', 'SOUL.md')
+  const filePath = 'SOUL.md'
   
   let content = ''
   try {
-    content = await readFile(soulPath, 'utf-8')
+    content = await readFile(filePath)
   } catch (error) {
     console.error('Error reading SOUL.md:', error)
-    content = '# SOUL.md\n\nError loading file.'
+    content = '# SOUL.md\n\nError loading file. Check that the Stoa API server is running.'
   }
 
   return (
@@ -22,7 +21,7 @@ export default async function SoulPage() {
         </p>
       </div>
       
-      <SoulEditor initialContent={content} filePath={soulPath} />
+      <SoulEditor initialContent={content} filePath={filePath} />
     </div>
   )
 }
