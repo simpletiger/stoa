@@ -1,3 +1,5 @@
+import SkillsDashboard from './SkillsDashboard'
+
 export default function SkillsPage() {
   return (
     <div className="max-w-7xl mx-auto">
@@ -8,9 +10,7 @@ export default function SkillsPage() {
         </p>
       </div>
       
-      <div className="bg-surface border border-border rounded-lg p-12 text-center">
-        <p className="text-foreground-muted">Skills dashboard coming soon...</p>
-      </div>
+      <SkillsDashboard />
     </div>
   )
 }

@@ -1,3 +1,5 @@
+import MemoryBrowser from './MemoryBrowser'
+
 export default function MemoryPage() {
   return (
     <div className="max-w-7xl mx-auto">
@@ -8,9 +10,7 @@ export default function MemoryPage() {
         </p>
       </div>
       
-      <div className="bg-surface border border-border rounded-lg p-12 text-center">
-        <p className="text-foreground-muted">Memory browser coming soon...</p>
-      </div>
+      <MemoryBrowser />
     </div>
   )
 }
