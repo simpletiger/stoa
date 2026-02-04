@@ -4,7 +4,6 @@ import { createClient } from '@/lib/supabase/client'
 import { LogOut, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { healthCheck } from '@/lib/stoa-api'
 
 interface HeaderProps {
   user: {
@@ -32,8 +31,13 @@ export default function Header({ user }: HeaderProps) {
   }, [])
 
   const checkHealth = async () => {
-    const healthy = await healthCheck()
-    setApiHealthy(healthy)
+    try {
+      const response = await fetch('/api/health', { cache: 'no-store' })
+      const data = await response.json()
+      setApiHealthy(data.healthy)
+    } catch (error) {
+      setApiHealthy(false)
+    }
   }
 
   const handleSignOut = async () => {
