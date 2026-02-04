@@ -11,13 +11,13 @@ interface TaskCardProps {
 }
 
 const priorityColors = {
-  high: 'bg-red text-[#282a36]',
-  medium: 'bg-yellow text-[#282a36]',
-  low: 'bg-blue text-[#282a36]',
+  high: 'bg-red/10 text-red border-red/20',
+  medium: 'bg-yellow/10 text-yellow border-yellow/20',
+  low: 'bg-blue/10 text-blue border-blue/20',
 }
 
 const creatorColors = {
-  jeremiah: 'text-purple',
+  jeremiah: 'text-accent',
   marcus: 'text-green',
 }
 
@@ -31,12 +31,12 @@ export default function TaskCard({ task, onEdit, onDelete, isDragging }: TaskCar
   return (
     <div
       onClick={onEdit}
-      className={`bg-background border border-dark-100 rounded-lg p-4 cursor-pointer hover:border-purple transition-all ${
-        isDragging ? 'shadow-xl rotate-2' : ''
+      className={`bg-surface border border-border rounded-lg p-3.5 cursor-pointer hover:border-accent/50 hover:bg-surface-elevated transition-all group ${
+        isDragging ? 'shadow-2xl shadow-accent/20 rotate-2 scale-105' : ''
       }`}
     >
       <div className="flex items-start justify-between gap-2 mb-2">
-        <h4 className="font-semibold text-foreground flex-1 line-clamp-2">
+        <h4 className="font-medium text-foreground flex-1 line-clamp-2 text-sm leading-snug">
           {task.title}
         </h4>
         <button
@@ -44,48 +44,48 @@ export default function TaskCard({ task, onEdit, onDelete, isDragging }: TaskCar
             e.stopPropagation()
             onDelete()
           }}
-          className="text-dark-200 hover:text-red transition-colors flex-shrink-0"
+          className="text-foreground-muted opacity-0 group-hover:opacity-100 hover:text-red transition-all flex-shrink-0"
           title="Delete task"
         >
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-3.5 h-3.5" />
         </button>
       </div>
 
       {task.description && (
-        <p className="text-sm text-dark-200 mb-3 line-clamp-3">
+        <p className="text-xs text-foreground-muted mb-3 line-clamp-2 leading-relaxed">
           {task.description}
         </p>
       )}
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5">
         <span
-          className={`text-xs font-semibold px-2 py-1 rounded ${
+          className={`text-[10px] font-medium px-2 py-0.5 rounded-md border ${
             priorityColors[task.priority]
           }`}
         >
-          {task.priority}
+          {task.priority.toUpperCase()}
         </span>
 
         {task.category && (
-          <span className="flex items-center gap-1 text-xs text-dark-200">
-            <Tag className="w-3 h-3" />
+          <span className="flex items-center gap-1 text-[10px] text-foreground-muted px-2 py-0.5 bg-surface-elevated rounded-md border border-border">
+            <Tag className="w-2.5 h-2.5" />
             {task.category}
           </span>
         )}
 
         {task.due_date && (
-          <span className="flex items-center gap-1 text-xs text-dark-200">
-            <Calendar className="w-3 h-3" />
+          <span className="flex items-center gap-1 text-[10px] text-foreground-muted px-2 py-0.5 bg-surface-elevated rounded-md border border-border">
+            <Calendar className="w-2.5 h-2.5" />
             {formatDate(task.due_date)}
           </span>
         )}
 
         <span
-          className={`flex items-center gap-1 text-xs ${
+          className={`flex items-center gap-1 text-[10px] font-medium ${
             creatorColors[task.creator]
           } ml-auto`}
         >
-          <User className="w-3 h-3" />
+          <User className="w-2.5 h-2.5" />
           {task.creator}
         </span>
       </div>

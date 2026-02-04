@@ -14,10 +14,10 @@ interface KanbanBoardProps {
 }
 
 const columns: { id: Task['status']; title: string; color: string }[] = [
-  { id: 'backlog', title: 'Backlog', color: 'border-dark-200' },
-  { id: 'todo', title: 'To Do', color: 'border-blue' },
-  { id: 'in-progress', title: 'In Progress', color: 'border-yellow' },
-  { id: 'done', title: 'Done', color: 'border-green' },
+  { id: 'backlog', title: 'Backlog', color: 'border-foreground-muted/20' },
+  { id: 'todo', title: 'To Do', color: 'border-blue/30' },
+  { id: 'in-progress', title: 'In Progress', color: 'border-yellow/30' },
+  { id: 'done', title: 'Done', color: 'border-green/30' },
 ]
 
 export default function KanbanBoard({
@@ -41,29 +41,32 @@ export default function KanbanBoard({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-foreground">Tasks</h2>
+        <div>
+          <h2 className="text-xl font-semibold text-foreground tracking-tight">Tasks</h2>
+          <p className="text-xs text-foreground-muted mt-0.5">Drag cards to change status</p>
+        </div>
         <button
           onClick={onTaskCreate}
-          className="flex items-center gap-2 bg-purple text-[#282a36] font-semibold px-4 py-2 rounded-lg hover:bg-purple/90 transition-all"
+          className="flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded-lg hover:bg-accent-hover transition-all text-sm shadow-lg shadow-accent/20"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           New Task
         </button>
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {columns.map((column) => {
             const columnTasks = getTasksByStatus(column.id)
 
             return (
               <div key={column.id} className="flex flex-col">
-                <div className={`bg-[#1e1f29] rounded-lg border-2 ${column.color} p-4 flex-1`}>
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-foreground">{column.title}</h3>
-                    <span className="text-xs bg-dark-100 text-dark-200 px-2 py-1 rounded-full">
+                <div className={`bg-surface/50 backdrop-blur-sm rounded-lg border ${column.color} p-3 flex-1`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-medium text-foreground text-sm">{column.title}</h3>
+                    <span className="text-[10px] bg-surface-elevated text-foreground-muted px-2 py-0.5 rounded-full font-medium">
                       {columnTasks.length}
                     </span>
                   </div>
@@ -73,8 +76,8 @@ export default function KanbanBoard({
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={`space-y-3 min-h-[200px] ${
-                          snapshot.isDraggingOver ? 'bg-dark-100/30 rounded-lg' : ''
+                        className={`space-y-2 min-h-[200px] transition-colors ${
+                          snapshot.isDraggingOver ? 'bg-accent/5 rounded-lg' : ''
                         }`}
                       >
                         {columnTasks.map((task, index) => (
