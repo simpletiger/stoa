@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/client'
 import { LogOut, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { healthCheck } from '@/lib/stoa-api'
 
 interface HeaderProps {
   user: {
@@ -18,6 +20,21 @@ interface HeaderProps {
 export default function Header({ user }: HeaderProps) {
   const router = useRouter()
   const supabase = createClient()
+  const [apiHealthy, setApiHealthy] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    // Check health on mount
+    checkHealth()
+
+    // Check health every 30 seconds
+    const interval = setInterval(checkHealth, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const checkHealth = async () => {
+    const healthy = await healthCheck()
+    setApiHealthy(healthy)
+  }
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -35,9 +52,27 @@ export default function Header({ user }: HeaderProps) {
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-semibold text-foreground tracking-tight">Stoa</h1>
-          <span className="text-foreground-muted text-xs hidden sm:inline font-mono uppercase tracking-wider">
-            Shared System
-          </span>
+          <div className="flex items-center gap-2">
+            <div 
+              className={`w-2 h-2 rounded-full transition-all ${
+                apiHealthy === null 
+                  ? 'bg-gray-400 animate-pulse' 
+                  : apiHealthy 
+                  ? 'bg-green-500 shadow-lg shadow-green-500/50' 
+                  : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
+              }`}
+              title={
+                apiHealthy === null 
+                  ? 'Checking API status...' 
+                  : apiHealthy 
+                  ? 'API connected' 
+                  : 'API offline'
+              }
+            />
+            <span className="text-foreground-muted text-xs hidden sm:inline font-mono uppercase tracking-wider">
+              Shared System
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
