@@ -34,21 +34,21 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in">
-      <div className="bg-surface border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl shadow-black/50">
-        <div className="sticky top-0 bg-surface/95 backdrop-blur-xl border-b border-white/10 p-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground tracking-tight">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div className="bg-surface border border-border rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl shadow-black/50">
+        <div className="sticky top-0 bg-surface/95 backdrop-blur-md border-b border-border p-5 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">
             {task ? 'Edit Task' : 'Create Task'}
           </h2>
           <button
             onClick={onClose}
-            className="text-foreground-muted hover:text-foreground hover:scale-110 transition-all"
+            className="text-foreground-muted hover:text-foreground transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-foreground-muted mb-1.5">
               Title *
@@ -159,17 +159,17 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             </select>
           </div>
 
-          <div className="flex gap-3 pt-6">
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-5 py-3 border border-white/20 text-foreground text-sm font-semibold rounded-xl hover:bg-white/5 transition-all"
+              className="flex-1 px-4 py-2.5 border border-border text-foreground text-sm font-medium rounded-lg hover:bg-surface-elevated transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-5 py-3 bg-accent hover:bg-accent/90 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30"
+              className="flex-1 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-white/90 transition-all"
             >
               {task ? 'Update Task' : 'Create Task'}
             </button>
