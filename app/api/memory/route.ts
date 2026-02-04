@@ -71,7 +71,12 @@ export async function GET(request: NextRequest) {
       const files = await readdir(memoryPath)
       const memoryFiles = files.filter(f => f.endsWith('.md'))
 
-      const results = []
+      const results: Array<{
+        filename: string
+        lineNumber: number
+        line: string
+        context: string
+      }> = []
       for (const filename of memoryFiles) {
         const filePath = join(memoryPath, filename)
         const content = await readFile(filePath, 'utf-8')

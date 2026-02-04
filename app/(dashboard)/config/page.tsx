@@ -16,7 +16,7 @@ export default function ConfigPage() {
           <div>
             <p className="text-sm font-medium mb-1">Warning: Direct Configuration Editing</p>
             <p className="text-xs text-foreground-muted">
-              Changes to this file affect OpenClaw's core configuration. Invalid JSON or 
+              Changes to this file affect OpenClaw&apos;s core configuration. Invalid JSON or 
               incorrect values may cause issues. A backup is recommended before making changes.
               Changes take effect on next OpenClaw restart.
             </p>
