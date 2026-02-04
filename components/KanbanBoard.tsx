@@ -49,7 +49,7 @@ export default function KanbanBoard({
         </div>
         <button
           onClick={onTaskCreate}
-          className="flex items-center gap-2 bg-accent text-white font-medium px-4 py-2 rounded-lg hover:bg-accent-hover transition-all text-sm shadow-lg shadow-accent/20"
+          className="flex items-center gap-2 bg-white text-black font-medium px-4 py-2 rounded-lg hover:bg-white/90 transition-all text-sm"
         >
           <Plus className="w-4 h-4" />
           New Task
@@ -77,7 +77,7 @@ export default function KanbanBoard({
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         className={`space-y-2 min-h-[200px] transition-colors ${
-                          snapshot.isDraggingOver ? 'bg-accent/5 rounded-lg' : ''
+                          snapshot.isDraggingOver ? 'bg-white/5 rounded-lg' : ''
                         }`}
                       >
                         {columnTasks.map((task, index) => (

@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0f;
-  --surface: #13131a;
-  --surface-elevated: #1a1a24;
-  --foreground: #e4e4e7;
-  --foreground-muted: #a1a1aa;
-  --border: #27272a;
-  --accent: #7c3aed;
-  --accent-hover: #8b5cf6;
+  --background: #000000;
+  --surface: #0a0a0a;
+  --surface-elevated: #141414;
+  --foreground: #ffffff;
+  --foreground-muted: #737373;
+  --border: #1f1f1f;
+  --accent: #ffffff;
+  --accent-hover: #e5e5e5;
 }
 
 body {
@@ -59,6 +59,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Selection */
 ::selection {
-  background: var(--accent);
-  color: white;
+  background: white;
+  color: black;
 }

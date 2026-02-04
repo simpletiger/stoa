@@ -31,8 +31,8 @@ export default function TaskCard({ task, onEdit, onDelete, isDragging }: TaskCar
   return (
     <div
       onClick={onEdit}
-      className={`bg-surface border border-border rounded-lg p-3.5 cursor-pointer hover:border-accent/50 hover:bg-surface-elevated transition-all group ${
-        isDragging ? 'shadow-2xl shadow-accent/20 rotate-2 scale-105' : ''
+      className={`bg-surface border border-border rounded-lg p-3.5 cursor-pointer hover:border-white/20 hover:bg-surface-elevated transition-all group ${
+        isDragging ? 'shadow-2xl shadow-white/10 rotate-2 scale-105' : ''
       }`}
     >
       <div className="flex items-start justify-between gap-2 mb-2">

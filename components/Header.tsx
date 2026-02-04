@@ -49,8 +49,8 @@ export default function Header({ user }: HeaderProps) {
                 className="w-7 h-7 rounded-full ring-1 ring-border"
               />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
+              <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+                <User className="w-4 h-4 text-black" />
               </div>
             )}
             <span className="text-foreground-muted hidden sm:inline text-sm">{displayName}</span>

@@ -57,7 +57,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
               placeholder="Enter task title..."
               required
             />
@@ -70,7 +70,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 resize-none transition-all"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 resize-none transition-all"
               placeholder="Add details about this task..."
               rows={4}
             />
@@ -86,7 +86,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value as Task['status'] })
                 }
-                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
                 required
               >
                 <option value="backlog">Backlog</option>
@@ -105,7 +105,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, priority: e.target.value as Task['priority'] })
                 }
-                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
                 required
               >
                 <option value="low">Low</option>
@@ -124,7 +124,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 type="text"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
                 placeholder="e.g., admin, dev, design"
               />
             </div>
@@ -137,7 +137,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 type="date"
                 value={formData.due_date}
                 onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
-                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
               onChange={(e) =>
                 setFormData({ ...formData, creator: e.target.value as Task['creator'] })
               }
-              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
               required
             >
               <option value="jeremiah">Jeremiah</option>
@@ -169,7 +169,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2.5 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent-hover transition-all shadow-lg shadow-accent/20"
+              className="flex-1 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-white/90 transition-all"
             >
               {task ? 'Update Task' : 'Create Task'}
             </button>
