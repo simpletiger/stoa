@@ -34,43 +34,43 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
-      <div className="bg-[#1e1f29] rounded-lg border border-dark-100 w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-up">
-        <div className="sticky top-0 bg-[#1e1f29] border-b border-dark-100 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-foreground">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div className="bg-surface border border-border rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl shadow-black/50">
+        <div className="sticky top-0 bg-surface/95 backdrop-blur-md border-b border-border p-5 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">
             {task ? 'Edit Task' : 'Create Task'}
           </h2>
           <button
             onClick={onClose}
-            className="text-dark-200 hover:text-foreground transition-colors"
+            className="text-foreground-muted hover:text-foreground transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className="block text-xs font-medium text-foreground-muted mb-1.5">
               Title *
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
               placeholder="Enter task title..."
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className="block text-xs font-medium text-foreground-muted mb-1.5">
               Description
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none resize-none"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 resize-none transition-all"
               placeholder="Add details about this task..."
               rows={4}
             />
@@ -78,7 +78,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
+              <label className="block text-xs font-medium text-foreground-muted mb-1.5">
                 Status *
               </label>
               <select
@@ -86,7 +86,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value as Task['status'] })
                 }
-                className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
                 required
               >
                 <option value="backlog">Backlog</option>
@@ -97,7 +97,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
+              <label className="block text-xs font-medium text-foreground-muted mb-1.5">
                 Priority *
               </label>
               <select
@@ -105,7 +105,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, priority: e.target.value as Task['priority'] })
                 }
-                className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
                 required
               >
                 <option value="low">Low</option>
@@ -117,33 +117,33 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
+              <label className="block text-xs font-medium text-foreground-muted mb-1.5">
                 Category
               </label>
               <input
                 type="text"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
                 placeholder="e.g., admin, dev, design"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">
+              <label className="block text-xs font-medium text-foreground-muted mb-1.5">
                 Due Date
               </label>
               <input
                 type="date"
                 value={formData.due_date}
                 onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
-                className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className="block text-xs font-medium text-foreground-muted mb-1.5">
               Creator *
             </label>
             <select
@@ -151,7 +151,7 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
               onChange={(e) =>
                 setFormData({ ...formData, creator: e.target.value as Task['creator'] })
               }
-              className="w-full bg-background border border-dark-100 rounded-lg px-4 py-2 text-foreground focus:border-purple focus:outline-none"
+              className="w-full bg-surface-elevated border border-border rounded-lg px-3.5 py-2.5 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all"
               required
             >
               <option value="jeremiah">Jeremiah</option>
@@ -163,13 +163,13 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-dark-100 text-foreground rounded-lg hover:bg-dark-100 transition-colors"
+              className="flex-1 px-4 py-2.5 border border-border text-foreground text-sm font-medium rounded-lg hover:bg-surface-elevated transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-purple text-[#282a36] font-semibold rounded-lg hover:bg-purple/90 transition-colors"
+              className="flex-1 px-4 py-2.5 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent-hover transition-all shadow-lg shadow-accent/20"
             >
               {task ? 'Update Task' : 'Create Task'}
             </button>
