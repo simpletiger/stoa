@@ -52,24 +52,28 @@ export default function Header({ user }: HeaderProps) {
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-semibold text-foreground tracking-tight">Stoa</h1>
-          <div className="flex items-center gap-2">
-            <div 
-              className={`w-2 h-2 rounded-full transition-all ${
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-surface-elevated border border-border">
+              <div 
+                className={`w-1.5 h-1.5 rounded-full transition-all ${
+                  apiHealthy === null 
+                    ? 'bg-gray-400 animate-pulse' 
+                    : apiHealthy 
+                    ? 'bg-green-500 shadow-sm shadow-green-500/50' 
+                    : 'bg-red-500 shadow-sm shadow-red-500/50 animate-pulse'
+                }`}
+              />
+              <span className={`text-xs font-medium ${
                 apiHealthy === null 
-                  ? 'bg-gray-400 animate-pulse' 
+                  ? 'text-gray-400' 
                   : apiHealthy 
-                  ? 'bg-green-500 shadow-lg shadow-green-500/50' 
-                  : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
-              }`}
-              title={
-                apiHealthy === null 
-                  ? 'Checking API status...' 
-                  : apiHealthy 
-                  ? 'API connected' 
-                  : 'API offline'
-              }
-            />
-            <span className="text-foreground-muted text-xs hidden sm:inline font-mono uppercase tracking-wider">
+                  ? 'text-green-500' 
+                  : 'text-red-500'
+              }`}>
+                {apiHealthy === null ? 'Checking' : apiHealthy ? 'Healthy' : 'Offline'}
+              </span>
+            </div>
+            <span className="text-foreground-muted text-xs hidden md:inline font-mono uppercase tracking-wider">
               Shared System
             </span>
           </div>
