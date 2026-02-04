@@ -63,8 +63,8 @@ export default function Header({ user }: HeaderProps) {
                   apiHealthy === null 
                     ? 'bg-gray-400 animate-pulse' 
                     : apiHealthy 
-                    ? 'bg-green-500 shadow-sm shadow-green-500/50' 
-                    : 'bg-red-500 shadow-sm shadow-red-500/50 animate-pulse'
+                    ? 'bg-green-500 shadow-lg shadow-green-500/50 animate-pulse' 
+                    : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
                 }`}
               />
               <span className={`text-xs font-medium ${
