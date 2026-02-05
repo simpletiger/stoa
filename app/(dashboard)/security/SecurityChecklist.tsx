@@ -216,10 +216,25 @@ export default function SecurityChecklist() {
         const parsedSections = parseSecurityChecklist(markdown)
         setSections(parsedSections)
 
-        // Load saved state from localStorage
-        const saved = localStorage.getItem('security-checklist-state')
-        if (saved) {
-          setCheckedItems(new Set(JSON.parse(saved)))
+        // Load saved state from API (with localStorage fallback)
+        try {
+          const stateResponse = await fetch('/api/security/state')
+          if (stateResponse.ok) {
+            const data = await stateResponse.json()
+            setCheckedItems(new Set(data.checkedItems || []))
+          } else {
+            // Fallback to localStorage if API fails
+            const saved = localStorage.getItem('security-checklist-state')
+            if (saved) {
+              setCheckedItems(new Set(JSON.parse(saved)))
+            }
+          }
+        } catch (apiError) {
+          // Fallback to localStorage if API fails
+          const saved = localStorage.getItem('security-checklist-state')
+          if (saved) {
+            setCheckedItems(new Set(JSON.parse(saved)))
+          }
         }
 
         setLoading(false)
@@ -232,10 +247,24 @@ export default function SecurityChecklist() {
     loadData()
   }, [])
 
-  // Save state to localStorage whenever it changes
+  // Save state to API and localStorage whenever it changes
   useEffect(() => {
     if (sections.length > 0) {
-      localStorage.setItem('security-checklist-state', JSON.stringify(Array.from(checkedItems)))
+      const items = Array.from(checkedItems)
+      
+      // Save to localStorage as backup
+      localStorage.setItem('security-checklist-state', JSON.stringify(items))
+      
+      // Save to API for cross-device sync
+      fetch('/api/security/state', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ checkedItems: items }),
+      }).catch(err => {
+        console.error('Failed to sync security state to API:', err)
+      })
     }
   }, [checkedItems, sections])
 
