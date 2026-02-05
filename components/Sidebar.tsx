@@ -15,7 +15,8 @@ import {
   Wrench,
   Fingerprint,
   Activity,
-  Edit
+  Edit,
+  Shield
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -31,6 +32,7 @@ const navigation = [
   { name: 'Skills', href: '/skills', icon: Puzzle },
   { name: 'Skill Editor', href: '/skill-editor', icon: Edit },
   { name: 'Config', href: '/config', icon: Settings },
+  { name: 'Security', href: '/security', icon: Shield },
 ]
 
 export default function Sidebar() {
