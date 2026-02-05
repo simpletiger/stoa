@@ -20,7 +20,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
+      <Sidebar user={user} />
       <div className="lg:pl-64">
         <Header user={user} />
         <main className="container mx-auto px-6 py-6">

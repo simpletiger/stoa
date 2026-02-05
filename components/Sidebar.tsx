@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { 
   LayoutDashboard, 
   Brain, 
@@ -16,9 +16,12 @@ import {
   Fingerprint,
   Activity,
   Edit,
-  Shield
+  Shield,
+  LogOut,
+  User
 } from 'lucide-react'
 import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 const navigation = [
   { name: 'Tasks', href: '/', icon: LayoutDashboard },
@@ -35,18 +38,42 @@ const navigation = [
   { name: 'Security', href: '/security', icon: Shield },
 ]
 
-export default function Sidebar() {
+interface SidebarProps {
+  user: {
+    email?: string
+    user_metadata?: {
+      avatar_url?: string
+      full_name?: string
+      user_name?: string
+    }
+  }
+}
+
+export default function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const supabase = createClient()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
+
+  const displayName = 
+    user.user_metadata?.full_name || 
+    user.user_metadata?.user_name || 
+    user.email?.split('@')[0] || 
+    'User'
 
   return (
     <>
-      {/* Mobile menu hamburger button - always visible on mobile */}
+      {/* Mobile menu hamburger button - always visible on mobile, right side */}
       <button
-        onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-6 left-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="lg:hidden fixed top-6 right-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
       >
-        <Menu size={20} />
+        {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
       {/* Mobile overlay */}
@@ -60,26 +87,20 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-40 h-screen w-64 bg-surface/95 backdrop-blur-xl border-r border-white/10
+          fixed top-0 z-40 h-screen w-64 bg-surface/95 backdrop-blur-xl border-white/10
           transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:translate-x-0
+          right-0 border-l
+          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0
         `}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-6 border-b border-border">
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3">
               <h1 className="text-xl font-semibold tracking-tight">
                 Stoa
               </h1>
-              {/* Close button - inside sidebar on mobile */}
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="lg:hidden p-1.5 rounded-lg hover:bg-surface-elevated"
-              >
-                <X size={18} />
-              </button>
             </div>
             <p className="text-sm text-foreground-muted">
               Marcus Dashboard
@@ -115,7 +136,33 @@ export default function Sidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-border">
+          <div className="p-4 border-t border-border space-y-3">
+            {/* User info */}
+            <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-elevated">
+              {user.user_metadata?.avatar_url ? (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt={displayName}
+                  className="w-7 h-7 rounded-full ring-1 ring-border"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+                  <User className="w-4 h-4 text-black" />
+                </div>
+              )}
+              <span className="text-sm text-foreground-muted">{displayName}</span>
+            </div>
+
+            {/* Logout button */}
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-elevated rounded-lg transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sign out</span>
+            </button>
+
+            {/* System status */}
             <div className="text-xs text-foreground-muted">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green rounded-full animate-pulse" />

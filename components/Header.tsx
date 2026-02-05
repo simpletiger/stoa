@@ -1,8 +1,5 @@
 'use client'
 
-import { createClient } from '@/lib/supabase/client'
-import { LogOut, User } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 interface HeaderProps {
@@ -17,8 +14,6 @@ interface HeaderProps {
 }
 
 export default function Header({ user }: HeaderProps) {
-  const router = useRouter()
-  const supabase = createClient()
   const [apiHealthy, setApiHealthy] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -39,17 +34,6 @@ export default function Header({ user }: HeaderProps) {
       setApiHealthy(false)
     }
   }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/login')
-  }
-
-  const displayName = 
-    user.user_metadata?.full_name || 
-    user.user_metadata?.user_name || 
-    user.email?.split('@')[0] || 
-    'User'
 
   return (
     <header className="border-b border-border bg-surface/50 backdrop-blur-md sticky top-0 z-50">
@@ -81,32 +65,6 @@ export default function Header({ user }: HeaderProps) {
               Shared System
             </span>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 text-sm">
-            {user.user_metadata?.avatar_url ? (
-              <img
-                src={user.user_metadata.avatar_url}
-                alt={displayName}
-                className="w-7 h-7 rounded-full ring-1 ring-border"
-              />
-            ) : (
-              <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
-                <User className="w-4 h-4 text-black" />
-              </div>
-            )}
-            <span className="text-foreground-muted hidden sm:inline text-sm">{displayName}</span>
-          </div>
-
-          <button
-            onClick={handleSignOut}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs text-foreground-muted hover:text-foreground hover:bg-surface-elevated rounded-md transition-colors border border-border"
-            title="Sign out"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Sign out</span>
-          </button>
         </div>
       </div>
     </header>
