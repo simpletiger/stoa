@@ -41,6 +41,14 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Mobile menu hamburger button - always visible on mobile */}
+      <button
+        onClick={() => setIsMobileMenuOpen(true)}
+        className="lg:hidden fixed top-6 left-4 z-50 p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+      >
+        <Menu size={20} />
+      </button>
+
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
@@ -65,7 +73,7 @@ export default function Sidebar() {
               <h1 className="text-xl font-semibold tracking-tight">
                 Stoa
               </h1>
-              {/* Mobile menu button - inside sidebar */}
+              {/* Close button - inside sidebar on mobile */}
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="lg:hidden p-1.5 rounded-lg hover:bg-surface-elevated"
@@ -77,16 +85,6 @@ export default function Sidebar() {
               Marcus Dashboard
             </p>
           </div>
-
-          {/* Mobile menu open button - below header */}
-          {!isMobileMenuOpen && (
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden fixed top-20 left-4 z-50 p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
-            >
-              <Menu size={20} />
-            </button>
-          )}
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-1">

@@ -54,7 +54,10 @@ export function parseSecurityChecklist(markdown: string): SecuritySection[] {
         currentSection.items.push(currentItem)
       }
 
-      const title = trimmed.replace(/^###\s+✅\s+\d+\.\s+/, '')
+      const title = trimmed
+        .replace(/^###\s+/, '')     // Remove markdown ###
+        .replace(/^✅\s+/, '')       // Remove checkbox emoji
+        .replace(/^\d+\.\s+/, '')   // Remove numbering
       const id = slugify(title)
       
       currentItem = {
