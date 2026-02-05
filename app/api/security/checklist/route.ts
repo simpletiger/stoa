@@ -1,12 +1,24 @@
-import { readFile } from 'fs/promises'
-import { join } from 'path'
 import { NextResponse } from 'next/server'
+import { readFile } from '@/lib/stoa-api'
+import { createClient } from '@/lib/supabase/server'
 
 export async function GET() {
   try {
-    // Read the SECURITY-HARDENING.md file from clawd workspace
-    const filePath = join(process.env.HOME || '', 'clawd', 'SECURITY-HARDENING.md')
-    const content = await readFile(filePath, 'utf-8')
+    // Verify authentication
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    // Read the SECURITY-HARDENING.md file via Stoa API
+    const content = await readFile('SECURITY-HARDENING.md')
     
     return new NextResponse(content, {
       headers: {

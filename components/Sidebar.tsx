@@ -44,7 +44,7 @@ export default function Sidebar() {
       {/* Mobile menu button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="fixed top-5 left-5 z-[60] lg:hidden p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+        className="fixed top-5 right-5 z-[60] lg:hidden p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
       >
         {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
