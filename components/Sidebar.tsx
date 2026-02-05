@@ -137,22 +137,6 @@ export default function Sidebar({ user }: SidebarProps) {
 
           {/* Footer */}
           <div className="p-4 border-t border-border space-y-3">
-            {/* User info */}
-            <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-elevated">
-              {user.user_metadata?.avatar_url ? (
-                <img
-                  src={user.user_metadata.avatar_url}
-                  alt={displayName}
-                  className="w-7 h-7 rounded-full ring-1 ring-border"
-                />
-              ) : (
-                <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
-                  <User className="w-4 h-4 text-black" />
-                </div>
-              )}
-              <span className="text-sm text-foreground-muted">{displayName}</span>
-            </div>
-
             {/* Logout button */}
             <button
               onClick={handleSignOut}
