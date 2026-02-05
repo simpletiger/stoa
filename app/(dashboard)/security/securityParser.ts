@@ -43,7 +43,11 @@ export function parseSecurityChecklist(markdown: string): SecuritySection[] {
       const priority = detectPriority(trimmed)
       currentSection = {
         priority,
-        title: trimmed.replace(/^##\s+[🔴🟠🟡🟢]\s+/, '').replace(' PRIORITY', ''),
+        title: trimmed
+          .replace(/^#{1,6}\s+/, '')    // Remove markdown headers
+          .replace(/^[🔴🟠🟡🟢]\s+/, '') // Remove emoji
+          .replace(/\s+PRIORITY$/, '')  // Remove "PRIORITY" suffix
+          .trim(),
         items: []
       }
       currentItem = null
