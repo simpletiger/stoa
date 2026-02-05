@@ -71,7 +71,7 @@ export default function Sidebar({ user }: SidebarProps) {
       {/* Mobile menu hamburger button - always visible on mobile, right side */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-6 right-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+        className="lg:hidden fixed top-4 right-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
       >
         {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>

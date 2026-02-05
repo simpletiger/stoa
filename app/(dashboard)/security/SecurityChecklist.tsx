@@ -158,7 +158,7 @@ function Section({
         <div className="flex items-center gap-4">
           <div className={`w-3 h-3 rounded-full ${colors.dot}`} />
           <div className="text-left">
-            <h2 className={`text-xl font-semibold ${colors.text}`}>
+            <h2 className="text-xl font-semibold text-foreground">
               {section.title}
             </h2>
             <p className="text-sm text-foreground-muted mt-1">
