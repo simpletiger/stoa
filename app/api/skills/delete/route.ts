@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { deleteSkill } from '@/lib/stoa-api'
 
-export async function POST(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
   try {
     // Verify authentication
     const supabase = await createClient()
