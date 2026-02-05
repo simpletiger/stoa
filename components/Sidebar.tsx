@@ -10,7 +10,11 @@ import {
   Puzzle, 
   Settings,
   Menu,
-  X
+  X,
+  UserCircle,
+  Wrench,
+  Fingerprint,
+  Activity
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -18,6 +22,10 @@ const navigation = [
   { name: 'Tasks', href: '/', icon: LayoutDashboard },
   { name: 'Soul', href: '/soul', icon: Brain },
   { name: 'Agents', href: '/agents', icon: Users },
+  { name: 'User', href: '/user', icon: UserCircle },
+  { name: 'Tools', href: '/tools', icon: Wrench },
+  { name: 'Identity', href: '/identity', icon: Fingerprint },
+  { name: 'Heartbeat', href: '/heartbeat', icon: Activity },
   { name: 'Memory', href: '/memory', icon: FolderOpen },
   { name: 'Skills', href: '/skills', icon: Puzzle },
   { name: 'Config', href: '/config', icon: Settings },
