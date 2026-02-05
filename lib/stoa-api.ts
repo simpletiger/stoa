@@ -152,6 +152,52 @@ export async function listSkills(): Promise<Skill[]> {
 }
 
 /**
+ * Get skill content (SKILL.md)
+ */
+export async function getSkillContent(skillName: string): Promise<string> {
+  const response = await apiRequest<{ success: boolean; content: string; skillName: string }>(
+    'POST',
+    '/api/skills/content',
+    { skillName }
+  )
+  return response.content
+}
+
+/**
+ * Create new skill
+ */
+export async function createSkill(name: string, description?: string): Promise<{ skillName: string; path: string }> {
+  const response = await apiRequest<{ success: boolean; skillName: string; path: string }>(
+    'POST',
+    '/api/skills/create',
+    { name, description }
+  )
+  return { skillName: response.skillName, path: response.path }
+}
+
+/**
+ * Save skill content
+ */
+export async function saveSkillContent(skillName: string, content: string): Promise<void> {
+  await apiRequest<{ success: boolean; skillName: string; size: number }>(
+    'POST',
+    '/api/skills/save',
+    { skillName, content }
+  )
+}
+
+/**
+ * Delete skill
+ */
+export async function deleteSkill(skillName: string): Promise<void> {
+  await apiRequest<{ success: boolean; skillName: string }>(
+    'DELETE',
+    '/api/skills/delete',
+    { skillName }
+  )
+}
+
+/**
  * Read OpenClaw config
  */
 export async function readConfig(): Promise<any> {

@@ -14,7 +14,8 @@ import {
   UserCircle,
   Wrench,
   Fingerprint,
-  Activity
+  Activity,
+  Edit
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -28,6 +29,7 @@ const navigation = [
   { name: 'Heartbeat', href: '/heartbeat', icon: Activity },
   { name: 'Memory', href: '/memory', icon: FolderOpen },
   { name: 'Skills', href: '/skills', icon: Puzzle },
+  { name: 'Skill Editor', href: '/skill-editor', icon: Edit },
   { name: 'Config', href: '/config', icon: Settings },
 ]
 
