@@ -41,14 +41,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="fixed top-5 right-5 z-[60] lg:hidden p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
-      >
-        {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
-
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
@@ -69,13 +61,32 @@ export default function Sidebar() {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-6 border-b border-border">
-            <h1 className="text-xl font-semibold tracking-tight">
-              Stoa
-            </h1>
-            <p className="text-sm text-foreground-muted mt-1">
+            <div className="flex items-center justify-between mb-3">
+              <h1 className="text-xl font-semibold tracking-tight">
+                Stoa
+              </h1>
+              {/* Mobile menu button - inside sidebar */}
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="lg:hidden p-1.5 rounded-lg hover:bg-surface-elevated"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <p className="text-sm text-foreground-muted">
               Marcus Dashboard
             </p>
           </div>
+
+          {/* Mobile menu open button - below header */}
+          {!isMobileMenuOpen && (
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden fixed top-20 left-4 z-50 p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+            >
+              <Menu size={20} />
+            </button>
+          )}
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-1">

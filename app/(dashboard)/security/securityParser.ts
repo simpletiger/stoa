@@ -31,7 +31,8 @@ export function parseSecurityChecklist(markdown: string): SecuritySection[] {
     const trimmed = line.trim()
 
     // Detect priority sections (## 🔴 CRITICAL PRIORITY)
-    if (trimmed.match(/^##\s+[🔴🟠🟡🟢]/)) {
+    // Also detect Implementation Order, Emergency Procedures, Security Posture Summary (skip these)
+    if (trimmed.match(/^##\s+[🔴🟠🟡🟢]/) && !trimmed.includes('Implementation Order') && !trimmed.includes('Emergency Procedures') && !trimmed.includes('Security Posture')) {
       if (currentSection && currentItem) {
         currentSection.items.push(currentItem)
       }

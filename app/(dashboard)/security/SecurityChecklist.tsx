@@ -12,8 +12,8 @@ const priorityColors = {
     dot: 'bg-red-500'
   },
   high: {
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/30',
+    bg: '',
+    border: '',
     text: 'text-orange-500',
     dot: 'bg-orange-500'
   },
