@@ -71,7 +71,7 @@ export default function Sidebar({ user }: SidebarProps) {
       {/* Mobile menu hamburger button - always visible on mobile, right side */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-4 right-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+        className="lg:hidden fixed top-[18px] right-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
       >
         {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
@@ -89,22 +89,16 @@ export default function Sidebar({ user }: SidebarProps) {
         className={`
           fixed top-0 z-40 h-screen w-64 bg-surface/95 backdrop-blur-xl border-white/10
           transition-transform duration-300 ease-in-out
-          right-0 border-l
-          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          ${isMobileMenuOpen ? 'right-0 translate-x-0 border-l' : 'right-0 translate-x-full border-l'}
           lg:left-0 lg:right-auto lg:border-l-0 lg:border-r lg:translate-x-0
         `}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-6 border-b border-border">
-            <div className="mb-3">
-              <h1 className="text-xl font-semibold tracking-tight">
-                Stoa
-              </h1>
-            </div>
-            <p className="text-sm text-foreground-muted">
-              Marcus Dashboard
-            </p>
+            <h1 className="text-xl font-semibold tracking-tight">
+              Stoa
+            </h1>
           </div>
 
           {/* Navigation */}
