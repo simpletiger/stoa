@@ -44,7 +44,7 @@ export default function Sidebar() {
       {/* Mobile menu hamburger button - always visible on mobile */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-6 left-4 z-50 p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
+        className="lg:hidden fixed top-6 left-4 z-[60] p-2.5 rounded-lg bg-surface border border-white/20 hover:bg-surface-elevated shadow-lg"
       >
         <Menu size={20} />
       </button>
