@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { Task } from '@/lib/types/database'
-import { X } from 'lucide-react'
+import { X, MessageSquare } from 'lucide-react'
+import CommentThread from './CommentThread'
+import CommentInput from './CommentInput'
+import { useComments } from '@/lib/hooks/useComments'
 
 interface TaskModalProps {
   task: Task | null
@@ -20,6 +23,8 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
     due_date: task?.due_date ? task.due_date.split('T')[0] : '',
     creator: task?.creator || 'jeremiah',
   })
+
+  const { comments, loading, addComment, commentCount } = useComments(task?.id || null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -175,6 +180,22 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
             </button>
           </div>
         </form>
+
+        {task && (
+          <div className="border-t border-border p-5 bg-surface/50">
+            <div className="flex items-center gap-2 mb-4">
+              <MessageSquare className="w-4 h-4 text-foreground-muted" />
+              <h3 className="text-sm font-semibold text-foreground">
+                Comments {commentCount > 0 && `(${commentCount})`}
+              </h3>
+            </div>
+
+            <div className="space-y-4">
+              <CommentThread comments={comments} loading={loading} />
+              <CommentInput onSubmit={addComment} disabled={loading} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

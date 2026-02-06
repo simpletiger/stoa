@@ -1,7 +1,9 @@
 'use client'
 
 import { Task } from '@/lib/types/database'
-import { Calendar, Tag, Trash2, User } from 'lucide-react'
+import { Calendar, Tag, Trash2, User, MessageSquare } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 interface TaskCardProps {
   task: Task
@@ -22,6 +24,43 @@ const creatorColors = {
 }
 
 export default function TaskCard({ task, onEdit, onDelete, isDragging }: TaskCardProps) {
+  const [commentCount, setCommentCount] = useState(0)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const fetchCommentCount = async () => {
+      const { count } = await supabase
+        .from('comments')
+        .select('*', { count: 'exact', head: true })
+        .eq('task_id', task.id)
+      
+      setCommentCount(count || 0)
+    }
+
+    fetchCommentCount()
+
+    // Subscribe to comment changes
+    const channel = supabase
+      .channel(`task:${task.id}:comments`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'comments',
+          filter: `task_id=eq.${task.id}`,
+        },
+        () => {
+          fetchCommentCount()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [task.id, supabase])
+
   const formatDate = (dateString: string | null) => {
     if (!dateString) return null
     const date = new Date(dateString)
@@ -77,6 +116,13 @@ export default function TaskCard({ task, onEdit, onDelete, isDragging }: TaskCar
           <span className="flex items-center gap-1 text-[10px] text-foreground-muted px-2 py-0.5 bg-surface-elevated rounded-md border border-border">
             <Calendar className="w-2.5 h-2.5" />
             {formatDate(task.due_date)}
+          </span>
+        )}
+
+        {commentCount > 0 && (
+          <span className="flex items-center gap-1 text-[10px] text-foreground-muted px-2 py-0.5 bg-surface-elevated rounded-md border border-border">
+            <MessageSquare className="w-2.5 h-2.5" />
+            {commentCount}
           </span>
         )}
 
