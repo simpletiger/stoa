@@ -31,6 +31,7 @@ const navigation = [
   { name: 'Tools', href: '/tools', icon: Wrench },
   { name: 'Identity', href: '/identity', icon: Fingerprint },
   { name: 'Heartbeat', href: '/heartbeat', icon: Activity },
+  { name: 'Files', href: '/files', icon: Edit },
   { name: 'Memory', href: '/memory', icon: FolderOpen },
   { name: 'Skills', href: '/skills', icon: Puzzle },
   { name: 'Skill Editor', href: '/skill-editor', icon: Edit },

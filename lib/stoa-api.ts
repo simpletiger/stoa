@@ -213,6 +213,63 @@ export async function writeConfig(config: any): Promise<void> {
 }
 
 /**
+ * Get heartbeat configuration
+ */
+export async function getHeartbeatConfig(): Promise<{ enabled: boolean; intervalMinutes: number; prompt: string }> {
+  const response = await apiRequest<{ success: boolean; config: { enabled: boolean; intervalMinutes: number; prompt: string } }>(
+    'GET',
+    '/api/heartbeat/config'
+  )
+  return response.config
+}
+
+/**
+ * Update heartbeat interval
+ */
+export async function updateHeartbeatInterval(intervalMinutes: number): Promise<void> {
+  await apiRequest<{ success: boolean }>(
+    'POST',
+    '/api/heartbeat/config',
+    { intervalMinutes }
+  )
+}
+
+/**
+ * Restart OpenClaw Gateway
+ */
+export async function restartGateway(reason?: string): Promise<{ message: string; output: string }> {
+  const response = await apiRequest<{ success: boolean; message: string; output: string }>(
+    'POST',
+    '/api/gateway/restart',
+    { reason }
+  )
+  return { message: response.message, output: response.output }
+}
+
+/**
+ * Get gateway status
+ */
+export async function getGatewayStatus(): Promise<{ running: boolean; output: string }> {
+  const response = await apiRequest<{ success: boolean; running: boolean; output: string }>(
+    'GET',
+    '/api/gateway/status'
+  )
+  return { running: response.running, output: response.output }
+}
+
+/**
+ * List files in workspace
+ */
+export async function listFiles(dir?: string): Promise<Array<{ name: string; path: string; isDirectory: boolean; size: number; modified: string }>> {
+  const url = dir ? `/api/files/list?dir=${encodeURIComponent(dir)}` : '/api/files/list'
+  const response = await apiRequest<{ success: boolean; files: Array<{ name: string; path: string; isDirectory: boolean; size: number; modified: string }> }>(
+    'GET',
+    url
+  )
+  return response.files
+}
+
+/**
  * Health check
  */
 export async function healthCheck(): Promise<boolean> {

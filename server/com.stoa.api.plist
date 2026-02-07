@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<parameter name="content"><plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.stoa.api</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/marcusaurelius/stoa/server/dist/index.js</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/marcusaurelius/stoa/server</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PORT</key>
+        <string>3001</string>
+        <key>STOA_API_TOKEN</key>
+        <string>REPLACE_WITH_YOUR_SECRET_TOKEN</string>
+        <key>HOME</key>
+        <string>/Users/marcusaurelius</string>
+    </dict>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <true/>
+    
+    <key>StandardOutPath</key>
+    <string>/Users/marcusaurelius/stoa/server/logs/stdout.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Users/marcusaurelius/stoa/server/logs/stderr.log</string>
+</dict>
+</plist>
